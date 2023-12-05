@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<script src='../dist/index.global.js'></script>
+
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='calendar'></div>
+
+  <script>
+    let today_date = new Date().getDate();
+    let today_month = new Date().getMonth() + 1;
+    let today_year = new Date().getFullYear();
+  
+    if(today_date < 10) {
+      today_date = "0"+today_date;
+    }
+    if(today_month < 10) {
+      today_month = "0"+today_month;
+    }
+  
+    let today = today_year + "-" +today_month + "-" + today_date;
+  
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+  
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,dayGridWeek,dayGridDay'
+        },
+        initialDate: today,
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        dayMaxEvents: true, // allow "more" link when too many events
+        events: [
+          {
+            title: '홍길동',
+            start: '2023-12-03',
+            end: '2023-12-04',
+            display: 'daygird',
+            color: '#ff9f89'
+          },
+          {
+            title: '김전진',
+            start: '2023-12-03',
+            end: '2023-12-04',
+            display: 'daygird',
+            color: '#ff9f89'
+          },
+          {
+            title: '안녕',
+            start: '2023-12-20',
+            end: '2023-12-25',
+            overlap: true,
+            display: 'daygird',
+            color: '#000000'
+          }
+        ]
+      });
+  
+      calendar.render();
+    });
+  
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입 페이지</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+    <a href="/">메인페이지</a>
+    <a href="/users/login">로그인</a>
+    <h1>회원가입 페이지</h1>
+    <p></p>
+    <button class="btn1">서버 정보 가져오기</button>
+    <button class="btn2">클라이언트가 서버로 정보 보내기</button>
+    <script>
+      document.querySelector(".btn1").addEventListener('click', function (e){
+          e.preventDefault();
+          //jquery
+          $.ajax({
+              type: "get",
+              url: "/users/getAjax", //같은 프로그램이라서 http 빼고 작성
+              dataType: "json",
+              success: function(/*결과*/result) {
+              //화면 표시
+                  //console.log(result);
+                  // console.log(result.userid);
+                  // console.log(result.passwd);
+                  let res = result.userid + " " + result.passwd;
+                  document.querySelector("p").innerText = res;
+              }
+          });
+      });
+      document.querySelector(".btn2").addEventListener('click', function (e){
+          e.preventDefault();
+          let obj = {
+              userid: "koreait",
+              passwd: "1234"
+          };
+          //jquery
+          $.ajax({
+            type: "post",
+            url: "/users/setAjax",
+            dataType: "json",
+            data: obj,
+            success: function(result) {
+                alert(result.msg);
+            }
+          });
+      });
+    </script>
+</body>
+</html>

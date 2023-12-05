@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>코리아이이티 아카데미 > Member > Update</title>
+</head>
+<body>
+<div th:insert="~{fragment/nav::nav_f}"></div>
+<h1>코리아이이티 회원 수정 페이지</h1>
+<form autocomplete="off" method="post" action="/member/update" onsubmit="return frmCheck()">
+    <ul>
+        <li>
+            <label>이메일</label>
+            <input type="text" name="userid" th:value="${view.userid}" maxlength="20" readonly />
+        </li>
+        <li>
+            <label>비밀번호</label>
+            <input type="password" name="passwd" th:value="${view.passwd}" maxlength="20"/>
+        </li>
+        <li>
+            <label>이름</label>
+            <input type="text" name="username" th:value="${view.username}" maxlength="10" />
+        </li>
+        <li>
+            <input type="submit" value="회원수정">
+        </li>
+    </ul>
+
+    <input type="hidden" name="id" th:value="${view.id}">
+</form>
+<script>
+    function frmCheck() {
+        let userid = document.querySelector("input[name=userid]");
+        let passwd = document.querySelector("input[name=passwd]");
+        let username = document.querySelector("input[name=username]");
+
+        if( userid.value == ""){
+            alert("아이디를 입력하세요");
+            userid.focus();
+            return false;
+        }
+        if( userid.value.length < 8 ){
+            alert("아이디 길이가 짧습니다.\n8자리 이상 입력하세요");
+            userid.value = ""; //기존 자료를 지우고
+            userid.focus();
+            return false;
+        }
+        if ( passwd.value == ""){
+            alert("비밀번호를 입력하세요");
+            passwd.focus();
+            return false;
+        }
+        if ( username.value == ""){
+            alert("이름을 입력하세요");
+            username.focus();
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
