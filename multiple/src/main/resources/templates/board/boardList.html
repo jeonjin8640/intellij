@@ -6,11 +6,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>코리아아이티 아카데미 > 다중게시판 > 목록</title>
+    <title>코리아아이티 아카데미 > 게시판 목록입니다.</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
     <link rel="stylesheet" th:href="@{/css/reset.css}">
-    <link rel="stylesheet" th:href="@{/css/configList.css}">
+    <link rel="stylesheet" th:href="@{/css/boardList.css}">
 
 </head>
 <body>
@@ -18,59 +18,39 @@
         <div class="top">
             <h3 class="en">
                 <i class="fa-solid fa-caret-right"></i> KOREA IT ACADEMY
-                <span class="ko">> 다중게시판 > 목록</span>
+                <span class="ko">> 게시판 목록입니다.</span>
             </h3>
         </div>
         <table>
             <thead>
-                <tr>
-                    <th>선택</th>
-                    <th>번호</th>
-                    <th>게시판코드</th>
-                    <th>게시판제목</th>
-                    <th>게시판댓글</th>
-                    <th>게시판색상</th>
-                    <th>게시판생성일</th>
-                    <th>비고</th>
-                </tr>
+            <tr>
+                <th>선택</th>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>등록일</th>
+                <th>첨부<br />파일</th>
+                <th>비고</th>
+            </tr>
             </thead>
             <tbody>
-                <tr th:each="config : ${config}">
-                    <td>
-                        <input type="checkbox">
-                    </td>
-                    <td>[[${config.configId}]]</td>
-                    <td>[[${config.configCode}]]</td>
-                    <td style="text-align: left; margin-left: 10px">
-                        <strong>
-                            <a target="_blank" th:href="@{/board/boardList?(configCode=${config.configCode})}">
-                            [[${config.configTitle}]]
-                            </a>
-                        </strong>
-                    </td>
-                    <td>
-                        <select name="" th:onchange="commentChange('[[${config.configId}]]', this.value)">
-                            <option value="Y" th:selected="${config.configComment eq 'Y'}">Yes</option>
-                            <option value="N" th:selected="${config.configComment eq 'N'}">No</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select name="" th:onchange="colorChange('[[${config.configId}]]', this.value)">
-                            <option value="#dc3545" th:selected="${config.configColor eq '#dc3545'}">RED</option>
-                            <option value="#0d6efd" th:selected="${config.configColor eq '#0d6efd'}">BLUE</option>
-                            <option value="#212529" th:selected="${config.configColor eq '#212529'}">BLACK</option>
-                        </select>
-                    </td>
-                    <td>[[${ #temporals.format(config.configDate, 'yyyy.MM. dd') }]]</td>
-                    <td>
-                        <a href="#">
-                            <button type="button" class="btn green">게시판정보</button>
-                        </a>
-                        <a href="#" th:onclick="dropTable([[${config.configCode}]])">
-                            <button type="button" class="btn red">게시판삭제</button>
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td>2</td>
+                <td style="text-align: left; margin-left: 10px">
+                    <strong>
+                        <a th:href="@{/board/view?(configCode=notice)}">코리아아이티 아카데미</a>
+                    </strong>
+                </td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
             </tbody>
         </table>
         <div class="bottom">
@@ -86,11 +66,11 @@
                 </a>
             </div>
             <div class="bottom-right">
-                <a th:href="@{/config/configList}">
-                    <button type="button" class="btn black">게시판목록</button>
+                <a th:href="@{/board/boardList?(configCode=notice)}">
+                    <button type="button" class="btn black">게시물목록</button>
                 </a>
-                <a th:href="@{/config/configWrite}">
-                    <button type="button" class="btn blue">게시판생성</button>
+                <a th:href="@{/board/boardWrite??(configCode=notice)}">
+                    <button type="button" class="btn blue">게시물작성</button>
                 </a>
             </div>
         </div>

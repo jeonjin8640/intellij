@@ -8,6 +8,8 @@ create table config(
     config_date date,
     primary key(config_id)
 );
+-- select *, date_format(config_date, '%Y.%m.%d') as configDate from config;
+
 --board_코드값 : 게시판
     create table board_${configCode}(
         id int not null auto_increment,
@@ -23,7 +25,7 @@ create table config(
     );
 
 --files_코드값 : 다중파일 업로드
-    create table files(
+    create table files_${configCode}(
         id int not null,
         orgName varchar(255),
         savedFileName varchar(255),
@@ -33,7 +35,7 @@ create table config(
         ext varchar(20)
     );
 --comment_코드값 : 댓글
-    create table comment(
+    create table comment_${configCode}(
         c_id int not null auto_increment,
         c_subject varchar(50),
         c_writer varchar(20),
@@ -42,5 +44,6 @@ create table config(
         c_regdate date,
         primary key(c_id)
     );
+
 
 
