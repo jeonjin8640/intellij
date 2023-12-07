@@ -28,7 +28,7 @@ public interface ConfigMapper {
             "        id int not null,\n" +
             "        orgName varchar(255),\n" +
             "        savedFileName varchar(255),\n" +
-            "        savedPathFileName varchar(255),\n" +
+            "        savedPathName varchar(255),\n" +
             "        savedFileSize bigint,\n" +
             "        folderName varchar(10),\n" +
             "        ext varchar(20)\n" +
