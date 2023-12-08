@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface BoardMapper {
     @Select("select ifnull(MAX(grp)+1, 1) from board_${configCode}")
@@ -16,6 +18,15 @@ public interface BoardMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void setBoard(BoardDto boardDto);
 
-    @Insert("insert into files_${configCode} values(#{id}, #{orgName}, #{savedFileName}, #{savedPathName}, #{savedFileSize}, #{folderName}, '')")
+    @Insert("insert into files_${configCode} values(#{id}, #{orgName}, #{savedFileName}, #{savedPathName}, #{savedFileSize}, #{folderName}, #{ext})")
     public void setFiles(FileDto fileDto);
+
+    @Select("select * from board_${configCode} order by id desc")
+    public List<BoardDto> getBoardList(String configCode);
+
+    @Select("select * from board_${configCode} where id = #{id}")
+    public BoardDto getBoard(String configCode, int id);
+    @Select("select * from files_${configCode} where id = #{id}")
+    public List<FileDto> getFiles(String configCode, int id);
+
 }
