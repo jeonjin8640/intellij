@@ -14,6 +14,7 @@
 
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/boardView.css}">
+    <link rel="stylesheet" th:href="@{/css/boardComment.css}">
 </head>
 <body>
     <div class="wrap">
@@ -70,7 +71,7 @@
         </table>
             <div class="bottom">
                 <div class="bottom-left">
-                    <a th:href="@{/board/boardList?(configCode=${configCode}}">
+                    <a th:href="@{/board/boardList?(configCode=${configCode})}">
                         <button type="button" class="btn black">게시물목록</button>
                     </a>
                 </div>
@@ -86,6 +87,87 @@
                     </a>
                 </div>
             </div>
+        <div class="comment-wrap">
+            <div class="comment-top">
+                <h3 class="en">
+                    <i class="fa-solid fa-caret-right blue"></i> Comments
+                </h3>
+            </div>
+            <div class="comment-main">
+                <div class="comment-list">
+                    <div class="comment-flex">
+                        <div class="comment-box">
+                            <h3>코리아아이티 아카데미 - <span>2023.12.11 12:19:00</span></h3>
+                            <p>
+                                코리아아이티 아카데미입니다. 부산광역식 부산진구에 위치해 있으며 IT 전문 교육기관입니다.
+                                <p class="msg-btn">
+                                    <a href="">수정</a> | <a href="">삭제</a>
+                                </p>
+                            </p>
+                        </div>
+                        <div class="comment-box">
+                            <h3>코리아아이티 아카데미 - <span>2023.12.11 12:19:00</span></h3>
+                            <p>
+                                코리아아이티 아카데미입니다. 부산광역식 부산진구에 위치해 있으며 IT 전문 교육기관입니다.
+                            <p class="msg-btn">
+                                <a href="">수정</a> | <a href="">삭제</a>
+                            </p>
+                            </p>
+                        </div>
+                        <div class="comment-box">
+                            <h3>코리아아이티 아카데미 - <span>2023.12.11 12:19:00</span></h3>
+                            <p>
+                                코리아아이티 아카데미입니다. 부산광역식 부산진구에 위치해 있으며 IT 전문 교육기관입니다.
+                            <p class="msg-btn">
+                                <a href="">수정</a> | <a href="">삭제</a>
+                            </p>
+                            </p>
+                        </div>
+                        <div class="comment-box">
+                            <h3>코리아아이티 아카데미 - <span>2023.12.11 12:19:00</span></h3>
+                            <p>
+                                코리아아이티 아카데미입니다. 부산광역식 부산진구에 위치해 있으며 IT 전문 교육기관입니다.
+                            <p class="msg-btn">
+                                <a href="">수정</a> | <a href="">삭제</a>
+                            </p>
+                            </p>
+                        </div>
+                        <div class="comment-box">
+                            <h3>코리아아이티 아카데미 - <span>2023.12.11 12:19:00</span></h3>
+                            <p>
+                                코리아아이티 아카데미입니다. 부산광역식 부산진구에 위치해 있으며 IT 전문 교육기관입니다.
+                            <p class="msg-btn">
+                                <a href="">수정</a> | <a href="">삭제</a>
+                            </p>
+                            </p>
+                        </div>
+                        <div class="comment-box">
+                            <h3>코리아아이티 아카데미 - <span>2023.12.11 12:19:00</span></h3>
+                            <p>
+                                코리아아이티 아카데미입니다. 부산광역식 부산진구에 위치해 있으며 IT 전문 교육기관입니다.
+                            <p class="msg-btn">
+                                <a href="">수정</a> | <a href="">삭제</a>
+                            </p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-write">
+                <div class="comment-msg">
+                    <h4 class="en">Message</h4>
+                    <textarea name=""></textarea>
+                </div>
+                <div class="comment-name">
+                    <h4 class="en">Name</h4>
+                    <input type="text">
+                </div>
+                <div class="comment-btn">
+                    <h4 class="en"></h4>
+                    <button type="button" class="btn yellow en">Post Comment</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
