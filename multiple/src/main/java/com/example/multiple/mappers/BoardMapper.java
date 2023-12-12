@@ -19,7 +19,7 @@ public interface BoardMapper {
     @Insert("insert into files_${configCode} values(#{id}, #{orgName}, #{savedFileName}, #{savedPathName}, #{savedFileSize}, #{folderName}, #{ext})")
     public void setFiles(FileDto fileDto);
 
-    @Select("select * from board_${configCode} order by id desc limit #{startNum}, #{offset}")
+    @Select("select * from board_${configCode} ${searchQuery} order by id desc limit #{startNum}, #{offset}")
     public List<BoardDto> getBoardList(Map<String, Object> map);
 
     @Select("select * from board_${configCode} where id = #{id}")
@@ -30,7 +30,8 @@ public interface BoardMapper {
     public void getBoardDelete(BoardDto boardDto);
     @Delete("delete from files_${configCode} where id = #{id}")
     public void setFilesDelete(BoardDto boardDto);
-    @Select("select count(*) from board_${configCode}")
-    public int getBoardCount(String configCode);
-
+    @Select("select count(*) from board_${configCode} ${searchQuery}")
+    public int getBoardCount(String configCode, String searchQuery);
+    @Select("select * from files_${configCode} where savedFileName = #{savedFileName}")
+    FileDto getFile(String configCode, String savedFileName);
 }

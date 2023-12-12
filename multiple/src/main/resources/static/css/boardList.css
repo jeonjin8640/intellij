@@ -70,3 +70,15 @@ a.active{
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
+select {
+    width: 100px;
+    padding: 6px 10px;
+}
+input {
+    width: 150px;
+    padding: 6px 10px;
+}
+.top {
+    display: flex;
+    justify-content: space-between;
+}

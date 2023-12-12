@@ -25,15 +25,17 @@ public class BoardService {
         boardMapper.setFiles(fileDto);
     }
 
-    public PageDto pageInfo(String configCode, int page){
+    public PageDto pageInfo(String configCode, int page, String searchType, String words){
         PageDto pageDto = new PageDto();
 
+        String searchQuery = getSearch(searchType, words);
+
         //전체 게시뭏 수
-        int totalCount = boardMapper.getBoardCount(configCode);
+        int totalCount = boardMapper.getBoardCount(configCode, searchQuery);
 
 
         int totalPage = (int) Math.ceil((double) totalCount / pageDto.getPageCount());
-        int startPage = (((int) Math.ceil((double) page / pageDto.getBlockCount())) -1) * pageDto.getBlockCount();
+        int startPage = ((int) (Math.ceil((double) page / pageDto.getBlockCount())) -1) * pageDto.getBlockCount() +1;
         int endPage = startPage + pageDto.getBlockCount() -1;
 
         if( endPage > totalPage ){
@@ -43,15 +45,33 @@ public class BoardService {
         pageDto.setTotalPage(totalPage);
         pageDto.setStartPage(startPage);
         pageDto.setEndPage(endPage);
+        pageDto.setPage(page);
 
         return pageDto;
     }
-    public List<BoardDto> getBoardList(String configCode, int page){
-        PageDto pd = pageInfo(configCode, page);
+
+    public String getSearch(String searchType, String words){
+        String searchQuery = "";
+        if(searchType.equals("writer")){
+            searchQuery = " where writer = '"+words+"'";
+        }else if(searchType.equals("content")){
+            searchQuery = " where content like '%"+words+"'";
+        }else{
+            searchQuery = "";
+        }
+        return searchQuery;
+    }
+    public List<BoardDto> getBoardList(String configCode, int page, String searchType, String words){
+        PageDto pd = pageInfo(configCode, page, searchType, words);
+        String searchQuery = getSearch(searchType, words);
+
+
         Map<String, Object> map = new HashMap<>();
         map.put("configCode", configCode);
         map.put("startNum", pd.getStartNum());
         map.put("offset", pd.getPageCount());
+        map.put("searchQuery", searchQuery);
+
 
         return boardMapper.getBoardList(map);
     }

@@ -7,6 +7,10 @@ import com.example.multiple.mappers.ConfigMapper;
 import com.example.multiple.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +18,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
@@ -30,12 +37,17 @@ public class BoardController {
     BoardService boardService;
     @Autowired
     ConfigMapper configMapper;
+    @Autowired
+    BoardMapper boardMapper;
 
     @GetMapping("/board/boardList")
-    public String getBoardList(@RequestParam String configCode, Model model, @RequestParam(value="page", defaultValue = "1") int page){
+    public String getBoardList(@RequestParam String configCode, Model model, @RequestParam(value="page", defaultValue = "1") int page, @RequestParam(value="searchType", defaultValue = "") String searchType, @RequestParam(value="words", defaultValue = "")String words){
         model.addAttribute("configCode", configCode);
-        model.addAttribute("board", boardService.getBoardList(configCode, page));
+        model.addAttribute("board", boardService.getBoardList(configCode, page, searchType, words));
         model.addAttribute("config", configMapper.getBoardConfig(configCode));
+        model.addAttribute("page",boardService.pageInfo(configCode, page, searchType, words));
+        String searchQuery = boardService.getSearch(searchType, words);
+        model.addAttribute("total", boardMapper.getBoardCount(configCode, searchQuery));
         return "board/boardList";
     }
     @GetMapping("/board/boardWrite")
@@ -116,5 +128,19 @@ public class BoardController {
         }
 
         return "redirect:/board/boardList?configCode="+boardDto.getConfigCode();
+    }
+    @GetMapping("/board/download")
+    public ResponseEntity<Resource> getDownload(@RequestParam String configCode, @RequestParam String savedFileName) throws MalformedURLException {
+
+        FileDto fd = boardMapper.getFile(configCode, savedFileName);
+        String fileName = fd.getOrgName().substring(0, fd.getOrgName().indexOf("."));
+        String extName = savedFileName.substring(savedFileName.lastIndexOf("."));
+
+        String downloadFile = fileName + extName;
+        UrlResource resource = new UrlResource("file:" + fd.getSavedPathName() + "/" + fd.getSavedFileName());
+        String encodeFileName = UriUtils.encode(downloadFile, StandardCharsets.UTF_8);
+        String contentDisposition = "attachment; filename=\"" + encodeFileName + "\"";
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition).body(resource);
     }
 }

@@ -45,13 +45,15 @@
                                <div class="img-box">
                                    <img th:src="@{|/${file.folderName}/${file.savedFileName}|}">
                                    <p class="img-btn">
-                                       <button class="btn red">다운로드</button>
+                                       <a th:href="@{/board/download?(configCode=${configCode}, savedFileName=${file.savedFileName})}">
+                                           <button class="btn red">다운로드</button>
+                                       </a>
                                    </p>
                                </div>
                            </th:block>
                            <th:block th:unless="${file.ext eq '.jpg' or file.ext eq '.png'}">
                                [[${file.orgName}]]
-                               <a href="">
+                               <a th:href="@{/board/download?(configCode=${configCode}, savedFileName=${file.savedFileName})}">
                                    <button class="btn red">다운로드</button>
                                </a>
                            </th:block>
