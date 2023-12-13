@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>코리아아이티 아카데미 > 게시판 글쓰기 입니다.</title>
+    <title>코리아아이티 아카데미 > 게시판 답글쓰기 입니다.</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <!-- <script src="../../static/js/ckeditor.js"></script> -->
     <!-- <link rel="stylesheet" href="../../static/css/reset.css">
@@ -21,17 +21,17 @@
         <div class="top">
             <h3 class="en">
                 <i class="fa-solid fa-caret-right"></i> KOREA IT ACADEMY
-                <span class="ko">> 게시판 글쓰기 입니다.</span>
+                <span class="ko">> 게시판 답글쓰기 입니다.</span>
             </h3>
         </div>
-        <form method="post" action="/board/boardWrite" enctype="multipart/form-data" onsubmit="return frmCheck()">
+        <form method="post" action="/board/boardReply" enctype="multipart/form-data" onsubmit="return frmCheck()">
             <input type="hidden" name="configCode" th:value="${configCode}">
             <table>
                 <tbody>
                 <tr>
                     <th>제목</th>
                     <td>
-                        <input type="text" name="subject">
+                        <input type="text" name="subject" th:value="${reply.subject}">
                     </td>
                 </tr>
                 <tr>
@@ -43,7 +43,7 @@
                 <tr>
                     <th>내용</th>
                     <td>
-                        <textarea id="content" name="content"></textarea>
+                        <textarea id="content" name="content">[[${reply.content}]]</textarea>
                     </td>
                 </tr>
                 <tr>
@@ -61,7 +61,7 @@
                     </a>
                 </div>
                 <div class="bottom-right">
-                        <button type="submit" class="btn blue create">게시물작성</button>
+                        <button type="submit" class="btn blue create">게시물답변</button>
                 </div>
             </div>
         </form>

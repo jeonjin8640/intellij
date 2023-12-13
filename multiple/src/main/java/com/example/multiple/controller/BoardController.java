@@ -58,8 +58,11 @@ public class BoardController {
     @PostMapping("/board/boardWrite")
     public String setBoardWrite(@RequestParam("files") List<MultipartFile> files, Model model, @ModelAttribute BoardDto boardDto) throws IOException {
             int grp = boardService.getGrpMaxCnt(boardDto.getConfigCode());
+            /*답변형 게시판 처리를 위한 부분*/
             boardDto.setGrp(grp);
+            boardDto.setSeq(boardDto.getSeq() +1);
 
+            /*답변형 게시판 처리를 위한 부분*/
 
 
         if( !files.get(0).isEmpty() ){
@@ -119,6 +122,7 @@ public class BoardController {
     public String getBoardDelete(@ModelAttribute BoardDto boardDto){
         if( !boardDto.getConfigCode().isEmpty() && boardDto.getId() > 0){
             boardService.getBoardDelete(boardDto); //내용 디비
+            boardMapper.setCommentDelete(boardDto);
             List<FileDto> files = boardService.getFiles(boardDto.getConfigCode(), boardDto.getId()); //파일 삭제
             for(FileDto fd: files){
                 File file = new File(fd.getSavedPathName() + "/" + fd.getSavedFileName());
@@ -142,5 +146,63 @@ public class BoardController {
         String contentDisposition = "attachment; filename=\"" + encodeFileName + "\"";
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition).body(resource);
+    }
+
+    @GetMapping("/board/boardReply")
+    public String getBoardReply(@RequestParam String configCode,@RequestParam int id, Model model){
+        BoardDto boardDto = boardMapper.getBoard(configCode, id);
+        model.addAttribute("reply", boardDto);
+        model.addAttribute("configCode", configCode);
+        return "board/boardReply";
+    }
+    @PostMapping("/board/boardReply")
+    public String setBoardReply(@RequestParam("files") List<MultipartFile> files, Model model, @ModelAttribute BoardDto boardDto) throws IOException {
+        /* 계층형 답글 알고리즘 코드*/
+        boardMapper.setReplyUpdate(boardDto);
+        boardDto.setGrp(boardDto.getGrp());
+        boardDto.setSeq(boardDto.getSeq() + 1);
+        boardDto.setDepth(boardDto.getDepth() +1);
+
+        /* 계층형 답글 알고리즘 코드*/
+
+
+        if( !files.get(0).isEmpty() ){
+            boardDto.setIsFiles("Y");
+            boardService.setBoard(boardDto);
+            int fileID = boardDto.getId();
+
+            //20231207
+            String folderName = new SimpleDateFormat("yyyyMMdd").format(System.currentTimeMillis());
+            //folder, file 생성
+            File makeFolder = new File(fileDir + folderName);
+            if( !makeFolder.exists() ){
+                makeFolder.mkdir();
+            }
+
+
+            FileDto fileDto = new FileDto();
+            for(MultipartFile mf : files) {
+                String savedPathName = fileDir + folderName;
+                String orgName = mf.getOriginalFilename();
+                String ext = orgName.substring(orgName.lastIndexOf("."));
+                String uuid = UUID.randomUUID().toString();
+                String savedFileName = uuid + ext;
+
+                mf.transferTo(new File(savedPathName + "/" + savedFileName));
+
+                fileDto.setConfigCode(boardDto.getConfigCode());
+                fileDto.setId(fileID);
+                fileDto.setOrgName(orgName);
+                fileDto.setSavedFileName(savedFileName);
+                fileDto.setSavedPathName(savedPathName);
+                fileDto.setFolderName(folderName);
+                fileDto.setExt(ext);
+
+                boardService.setFiles(fileDto);
+            }
+        }else{
+            boardService.setBoard(boardDto);
+        }
+        return "board/boardList?configCode="+boardDto.getConfigCode();
     }
 }

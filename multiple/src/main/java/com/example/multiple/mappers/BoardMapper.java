@@ -12,14 +12,14 @@ public interface BoardMapper {
     @Select("select ifnull(MAX(grp)+1, 1) from board_${configCode}")
     public int getGrpMaxCnt(String configCode);
 
-    @Insert("insert into board_${configCode} values(null, #{subject}, #{writer}, #{content}, 0, now(), #{grp}, 1, 1, #{isFiles})")
+    @Insert("insert into board_${configCode} values(null, #{subject}, #{writer}, #{content}, 0, now(), #{grp}, #{seq}, 1, #{isFiles})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void setBoard(BoardDto boardDto);
 
     @Insert("insert into files_${configCode} values(#{id}, #{orgName}, #{savedFileName}, #{savedPathName}, #{savedFileSize}, #{folderName}, #{ext})")
     public void setFiles(FileDto fileDto);
 
-    @Select("select * from board_${configCode} ${searchQuery} order by id desc limit #{startNum}, #{offset}")
+    @Select("select * from board_${configCode} ${searchQuery} order by grp desc, seq asc limit #{startNum}, #{offset}")
     public List<BoardDto> getBoardList(Map<String, Object> map);
 
     @Select("select * from board_${configCode} where id = #{id}")
@@ -30,8 +30,14 @@ public interface BoardMapper {
     public void getBoardDelete(BoardDto boardDto);
     @Delete("delete from files_${configCode} where id = #{id}")
     public void setFilesDelete(BoardDto boardDto);
+    @Delete("delete from comment_${configCode} where b_id = #{id}")
+    public void setCommentDelete(BoardDto boardDto);
     @Select("select count(*) from board_${configCode} ${searchQuery}")
     public int getBoardCount(String configCode, String searchQuery);
     @Select("select * from files_${configCode} where savedFileName = #{savedFileName}")
     FileDto getFile(String configCode, String savedFileName);
+
+    /* 계층형 게시판에서 답글 순서를 변경하는 업데이트 작업 */
+    @Update("update board_${configCode} set seq = seq + 1 where grp = #{grp} and seq > #{seq}")
+    void setReplyUpdate(BoardDto boardDto);
 }

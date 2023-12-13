@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class CommentDto {
     private String configCode;
     private int cId;
+    private int bId;
     private String cSubject;
     private String cWriter;
     private String cComment;
@@ -25,6 +26,14 @@ public class CommentDto {
 
     public void setcId(int cId) {
         this.cId = cId;
+    }
+
+    public int getbId() {
+        return bId;
+    }
+
+    public void setbId(int bId) {
+        this.bId = bId;
     }
 
     public String getcSubject() {
@@ -72,6 +81,7 @@ public class CommentDto {
         return "CommentDto{" +
                 "configCode='" + configCode + '\'' +
                 ", cId=" + cId +
+                ", bId=" + bId +
                 ", cSubject='" + cSubject + '\'' +
                 ", cWriter='" + cWriter + '\'' +
                 ", cComment='" + cComment + '\'' +
