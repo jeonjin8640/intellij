@@ -24,6 +24,7 @@ public class MemberController {
             queryString = "WHERE username = '"+words+"'";
         }else{
 //            select * from member
+
             queryString = "";
         }
         System.out.println(queryString);
