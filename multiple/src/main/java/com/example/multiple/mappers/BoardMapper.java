@@ -18,6 +18,8 @@ public interface BoardMapper {
 
     @Insert("insert into files_${configCode} values(#{id}, #{orgName}, #{savedFileName}, #{savedPathName}, #{savedFileSize}, #{folderName}, #{ext})")
     public void setFiles(FileDto fileDto);
+    @Select("select * from files_${configCode} where savedFileName = #{savedFileName}")
+    FileDto getFile(String configCode, String savedFileName);
 
     @Select("select * from board_${configCode} ${searchQuery} order by grp desc, seq asc limit #{startNum}, #{offset}")
     public List<BoardDto> getBoardList(Map<String, Object> map);
@@ -34,8 +36,6 @@ public interface BoardMapper {
     public void setCommentDelete(BoardDto boardDto);
     @Select("select count(*) from board_${configCode} ${searchQuery}")
     public int getBoardCount(String configCode, String searchQuery);
-    @Select("select * from files_${configCode} where savedFileName = #{savedFileName}")
-    FileDto getFile(String configCode, String savedFileName);
 
     /* 계층형 게시판에서 답글 순서를 변경하는 업데이트 작업 */
     @Update("update board_${configCode} set seq = seq + 1 where grp = #{grp} and seq > #{seq}")
