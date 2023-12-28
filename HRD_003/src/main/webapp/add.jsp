@@ -2,10 +2,6 @@
     pageEncoding="UTF-8"%>
 <jsp:useBean id="memberDao" class="dao.MemberDao"></jsp:useBean>
 
-<%
-	int custno = memberDao.nextCustno();
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +21,7 @@
 					<tr>
 						<th>회원번호(자동발생)</th>
 						<td>
-							<input type="text" name="custno" readonly value="<%=custno %>"/>
+							<input type="text" name="custno" readonly value="<%=memberDao.nextCustno() %>"/>
 						</td>
 					</tr>
 					<tr>
@@ -49,7 +45,7 @@
 					<tr>
 						<th>가입일자</th>
 						<td>
-							<input type="text" name="joindate">
+							<input type="text" name="joindate" placeholder="예시:20231228">
 						</td>
 					</tr>
 					<tr>

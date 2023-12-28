@@ -60,7 +60,7 @@
 	}
 	
 	.container {
-		width: 600px;
+		width: 800px;
 		margin: 0 auto;
 	}
 	
@@ -80,5 +80,9 @@
 	}
 	
 	tr:last-child {
+		text-align: center;
+	}
+	
+	.member_list {
 		text-align: center;
 	}
