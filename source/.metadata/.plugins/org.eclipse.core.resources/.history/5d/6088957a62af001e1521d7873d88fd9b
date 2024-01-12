@@ -1,0 +1,33 @@
+package servlet07.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import servlet07.dto.User;
+
+public class UserDao {
+	
+	private String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
+	private String id = "root";
+	private String pwd = "1234";
+	
+	//insert
+	public int userInsert(User user) throws Exception {
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection(url, id, pwd);
+		
+		String INSERT_SQL = "insert into demo values(null, ?, ?, ?)";
+		
+		PreparedStatement pstmt = conn.prepareStatement(INSERT_SQL);
+		pstmt.setString(1, user.getUsername());
+		pstmt.setString(2, user.getEmail());
+		pstmt.setString(3, user.getPasswd());
+		int result = pstmt.executeUpdate();
+		
+		return result;
+	}
+	
+}

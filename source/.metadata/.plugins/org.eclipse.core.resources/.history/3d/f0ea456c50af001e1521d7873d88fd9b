@@ -1,0 +1,5 @@
+package servlet07.dto;
+
+public class User {
+
+}

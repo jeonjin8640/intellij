@@ -1,0 +1,5 @@
+package servlet07.dao;
+
+public class UserDao {
+
+}

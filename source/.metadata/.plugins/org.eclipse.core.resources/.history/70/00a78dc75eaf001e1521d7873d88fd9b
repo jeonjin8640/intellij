@@ -1,0 +1,7 @@
+package servlet07.dao;
+
+public class UserDao {
+	
+	private url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
+
+}

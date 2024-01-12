@@ -1,0 +1,5 @@
+package servlet06.dto;
+
+public class Register {
+
+}

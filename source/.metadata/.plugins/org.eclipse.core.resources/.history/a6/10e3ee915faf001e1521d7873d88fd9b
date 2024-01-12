@@ -1,0 +1,9 @@
+package servlet07.dao;
+
+public class UserDao {
+	
+	private String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
+	private String id = "root";
+	private String pwd = "1234";
+	
+}

@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+* {
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+
+a {
+	color:#333;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+header {
+	background-color:#0d6efd;
+	padding: 10px 0;
+}
+
+header h2 {
+	text-align:center;
+	color:#fff;
+}
+
+footer {
+	padding:10px 0;
+	background-color:#000;
+}
+
+footer p {
+	text-align:center;
+	color:#fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

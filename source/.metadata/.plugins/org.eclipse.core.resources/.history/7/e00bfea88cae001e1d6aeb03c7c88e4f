@@ -1,0 +1,16 @@
+package servlet06.dao;
+
+import java.sql.DriverManager;
+
+import servlet06.dto.Register;
+
+public class RegisterDto {
+	
+	public int registerEmp(Register reg) throws Exception {
+		
+		Class.forName("oracle.jdbc.OracleDriver");
+		DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "1234");
+		
+	}
+	
+}

@@ -1,0 +1,5 @@
+package servlet06.dao;
+
+public class RegisterDto {
+
+}
